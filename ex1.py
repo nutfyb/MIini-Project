@@ -3,7 +3,14 @@ import pandas as pd
 import pickle
 
 st.write("""
-### Hello!
+# Welcome to our web application
+""")
+
+st.header('Application of Student\'s Status Prediction:')
+
+
+st.write("""
+### User Input:
 """)
 
 st.sidebar.header('User Input')
@@ -42,6 +49,7 @@ def get_input():
     return data_df
 
 
+
 data_df = get_input()
 st.write(data_df)
 
@@ -65,12 +73,22 @@ X_new = X_new.drop(columns=['Sex','EntryTypeName','Sex_Male'])
 
 # -- Reads the saved normalization model
 load_nor = pickle.load(open('normalization.pkl', 'rb'))
+st.write("""
+### Pre-Processed Input:
+""")
+st.write(X_new)
 # Apply the normalization model to new data
 X_new = load_nor.transform(X_new)
-# st.write(X_new)
+st.write("""
+### Normalized Input:
+""")
+st.write(X_new)
 
 # -- Reads the saved classification model
 load_knn = pickle.load(open('best_knn.pkl', 'rb'))
 # Apply model for prediction
 X_new = load_knn.predict(X_new)
+st.write("""
+### Prediction:
+""")
 st.write(X_new)
